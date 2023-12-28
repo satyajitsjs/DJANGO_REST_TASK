@@ -1,31 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Car Details</title>
-</head>
-<body>
+  </head>
+  <body>
     {% include "includes/header.html" %}
 
-    <h1>Create Car Details</h1>
+    <h1 id="heading">Create Car Details</h1>
 
-    <form method="post" action="{% url 'create_car' %}">
-        {% csrf_token %}
-        <label for="name">Car Name:</label>
-        <input type="text" id="name" name="name" required><br>
+    <form method="post" action="{% url 'create_car' %}" id="carForm">
+      {% csrf_token %}
+      <label for="name">Car Name:</label>
+      <input type="text" id="name" name="name" required /><br />
 
-        <label for="model">Car Model:</label>
-        <input type="text" id="model" name="model" required><br>
+      <label for="model">Car Model:</label>
+      <input type="text" id="model" name="model" required /><br />
 
-        <label for="year">Year:</label>
-        <input type="number" id="year" name="year" required><br>
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" required /><br />
 
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" required><br>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" required /><br />
 
-        <button type="submit">Create Car</button>
+      <button type="submit" id="submit">Create Car</button>
     </form>
 
-</body>
+    <script>
+      var get_url = window.location.href;
+      var urlString = new URL(get_url);
+      var url = urlString.search;
+      var parts = url.split("?");
+
+      var request_type = parts[1];
+      console.log(request_type)
+
+      if (request_type == "edit_car") {
+        var submit = document.getElementById("submit");
+        var carForm = document.getElementById("carForm");
+        var heading = document.getElementById("heading");
+        submit.textContent = "Update Car";
+        heading.textContent = "Update Car Details";
+        var car_id = parts[2];
+        carForm.action = "/edit_car/" + car_id;
+        var URL = "/api/cars/" + car_id;
+        
+        $.ajax({
+          type: "GET",
+          url: URL,
+          success: function (response) {
+            var data = response.data
+            document.getElementById("name").value = data.name;
+            document.getElementById("model").value = data.model;
+            document.getElementById("year").value = data.year;
+            document.getElementById("price").value = data.price;
+          }
+        });
+
+      }
+    </script>
+  </body>
 </html>

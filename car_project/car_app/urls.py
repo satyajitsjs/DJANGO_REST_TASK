@@ -10,6 +10,7 @@ urlpatterns = [
 
 
     path('create_car/', v.create_car, name='create_car'),
+    path('edit_car/<int:car_id>', v.edit_car, name='create_car'),
     path('book_car/<int:car_id>/<int:user_id>/', v.book_car, name='book_car'),
     path('view_bookings/', v.view_bookings, name='view_bookings'),
 

@@ -173,3 +173,22 @@ def book_car(request, car_id , user_id):
 def view_bookings(request):
     bookings = Booking.objects.all()
     return render(request, 'booking.html', {'bookings': bookings})
+
+def edit_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        model = request.POST.get('model')
+        year = request.POST.get('year')
+        price = request.POST.get('price')
+        print(name)
+        print(model)
+        try:
+            car.name = name
+            car.model = model
+            car.year = year
+            car.price = price
+            car.save()
+            return redirect("home")
+        except Exception as e:
+            return redirect("create_car")

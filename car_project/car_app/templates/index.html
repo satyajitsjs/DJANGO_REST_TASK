@@ -27,6 +27,14 @@
           <button class="bookcar-button" data-car-id="{{ car.id }}">
             Book
           </button>
+          <a href="/create_car/?edit_car?{{car.id}}">
+              <button class="bookcar-button_edit" data-car-id="{{ car.id }}">
+                  Edit
+                </button>
+            </a>
+          <button class="bookcar-button_delete" data-car-id="{{ car.id }}">
+            Delete
+          </button>
         </td>
       </tr>
       {% endfor %}
@@ -55,6 +63,19 @@
         var parts = value.split("; " + name + "=");
         if (parts.length == 2) return parts.pop().split(";").shift();
       }
+
+      user_role = localStorage.getItem("role")
+        if (user_role != 1){
+          $(".bookcar-button_edit").hide()
+          $(".bookcar-button_delete").hide()
+        }
+
+
+        // $(".bookcar-button_delete").click(function (e) { 
+        //     e.preventDefault();
+        //     var car_id = $(this).data("car-id");
+        //     console.log(car_id)
+        // });
     </script>
   </body>
 </html>
