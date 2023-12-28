@@ -35,7 +35,9 @@
         <li class="nav-item">
           <a href="/" class="nav-link" aria-current="page">Home</a>
         </li>
-        <li class="nav-item"><a href="/create_car/" class="nav-link">Create Post</a></li>
+        <li class="nav-item"><a href="/create_car/" class="nav-link" id="create_car">Create Post</a></li>
+        <li class="nav-item"><a href="/edit_user/" class="nav-link"  id="edit_user" >Edit Profile</a></li>
+        <li class="nav-item"><a href="/view_bookings/" class="nav-link" id="view_bookings">View Booking</a></li>
         <li class="nav-item"><a href="/register" class="nav-link" id="register">Register</a></li>
         <li class="nav-item"><a href="/login/page/" class="nav-link" id="login">Login</a></li>
         <li class="nav-item"><a href="/logout" class="nav-link" id="logout">Logout</a></li>
@@ -47,6 +49,7 @@
           localStorage.removeItem("email")
           localStorage.removeItem("name")
           localStorage.removeItem("role")
+          localStorage.removeItem("id")
           window.location.href = "/";
         });
 
@@ -55,7 +58,14 @@
           $("#login").hide()
           $("#register").hide()
         }else{
+          $("#edit_user").hide()
           $("#logout").hide()
+        }
+
+        user_role = localStorage.getItem("role")
+        if (user_role != 1){
+          $("#create_car").hide()
+          $("#view_bookings").hide()
         }
       </script>
   </body>

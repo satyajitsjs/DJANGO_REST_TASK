@@ -165,6 +165,11 @@ def index(request):
 
 def book_car(request, car_id , user_id):
     car_id = car_id
-    user_id = user_id 
+    user_id = user_id
     Booking.objects.create(user_id=user_id, car_id=car_id)
     return redirect('home')  
+
+
+def view_bookings(request):
+    bookings = Booking.objects.all()
+    return render(request, 'booking.html', {'bookings': bookings})

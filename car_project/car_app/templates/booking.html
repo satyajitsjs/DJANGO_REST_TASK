@@ -1,0 +1,32 @@
+<!-- bookings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Bookings</title>
+    <!-- Add any additional CSS or styling links here -->
+</head>
+<body>
+    {% include "includes/header.html" %}
+    <h1>Car Bookings</h1>
+
+    <table border="1">
+        <tr>
+            <th>User</th>
+            <th>Car</th>
+            <th>Date Booked</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.user.name }}</td>
+            <td>{{ booking.car.name }}</td>
+            <td>{{ booking.date_booked }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Add any additional HTML or scripts as needed -->
+
+</body>
+</html>
