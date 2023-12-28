@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% include "includes/header.html" %}
+    <h1>View Cars</h1>
+
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+      {% for car in cars %}
+      <tr>
+        <td>{{ car.name }}</td>
+        <td>{{ car.model }}</td>
+        <td>{{ car.year }}</td>
+        <td>{{ car.price }}</td>
+        <td>
+          <button class="bookcar-button" data-car-id="{{ car.id }}">
+            Book
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <script>
+      $(document).ready(function () {
+        $(".bookcar-button").click(function (e) {
+          e.preventDefault();
+          var car_id = $(this).data("car-id");
+          var user_id = localStorage.getItem("id");
+          var csrftoken = getCookie('csrftoken');
+          $.ajax({
+            type: "post",
+            url: "book_car/" + car_id + "/" + user_id + "/",
+            data: {"csrfmiddlewaretoken": csrftoken},
+            dataType: "dataType",
+            success: function (response) {
+              console.log(response);
+            },
+          });
+        });
+      });
+
+      function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+      }
+    </script>
+  </body>
+</html>
