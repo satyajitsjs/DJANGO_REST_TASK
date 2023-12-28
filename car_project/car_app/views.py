@@ -159,7 +159,7 @@ def create_car(request):
 
 
 def index(request):
-    cars = Car.objects.all()
+    cars = Car.objects.filter(delete_flag=False)
     return render(request, 'index.html', {'cars': cars})
 
 
@@ -192,3 +192,12 @@ def edit_car(request, car_id):
             return redirect("home")
         except Exception as e:
             return redirect("create_car")
+
+def delete_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id, delete_flag=False)
+
+    if request.method == 'POST':
+        car.soft_delete()
+        return redirect("home")  # Redirect to home or the appropriate URL
+
+    return render(request, 'index.html', {'car': car})

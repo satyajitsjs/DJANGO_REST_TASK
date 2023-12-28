@@ -21,6 +21,11 @@ class Car(models.Model):
     model = models.CharField(max_length=50)
     year = models.IntegerField()
     price = models.IntegerField()
+    delete_flag = models.BooleanField(default=False)
+
+    def soft_delete(self):
+        self.delete_flag = True
+        self.save()
 
 
 class Booking(models.Model):
