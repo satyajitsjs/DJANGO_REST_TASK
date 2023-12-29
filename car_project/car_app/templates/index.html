@@ -47,11 +47,13 @@
           if (user_id) {
             var car_id = $(this).data("car-id");
             var csrftoken = getCookie("csrftoken");
+            var currentDate = new Date();
+            // var formattedDate = currentDate.toISOString(); // You can format the date as needed
             $.ajax({
               type: "post",
-              url: "book_car/" + car_id + "/" + user_id + "/",
-              data: { csrfmiddlewaretoken: csrftoken },
-              dataType: "dataType",
+              url: "/bookings/",
+              data: { csrfmiddlewaretoken: csrftoken , car : car_id , user : user_id },
+              dataType: "JSON",
               success: function (response) {
                 console.log(response);
               },

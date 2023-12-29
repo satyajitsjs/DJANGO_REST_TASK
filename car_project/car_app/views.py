@@ -94,6 +94,7 @@ def booking_list(request):
         return Response({'message': 'Bookings Fetched Successfully', 'data': serializer.data})
 
     elif request.method == 'POST':
+        print(request.data)
         serializer = BookingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -167,7 +168,9 @@ def book_car(request, car_id , user_id):
     car_id = car_id
     user_id = user_id
     Booking.objects.create(user_id=user_id, car_id=car_id)
-    return redirect('home')  
+    return JsonResponse({
+        "message":"Booking SuccessFully",
+        })
 
 
 def view_bookings(request):
